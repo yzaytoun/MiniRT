@@ -6,7 +6,7 @@
 /*   By: yzaytoun <yzaytoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 11:19:00 by jvasquez          #+#    #+#             */
-/*   Updated: 2024/12/14 21:04:34 by yzaytoun         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:35:16 by yzaytoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,14 @@ void	add_element(t_scene *scene, t_input *in)
 		ft_lstinsert(&scene->geometries, create_cone(in->inputs), FRONT);
 }
 
-void	add_scene_config(t_scene *scene)
+void	scene_init(t_scene *scene)
 {
+	scene->a_light = NULL;
+	scene->a_cam = NULL;
+	scene->geometries = NULL;
+	scene->d_lights = NULL;
+	scene->cameras = NULL;
+	scene->mlx = NULL;
 	scene->geomatrix = new_geomatrix(WIN_H, WIN_W);
 	scene->selected = NULL;
 	scene->menu_color = create_color(MENU_COLOR, MENU_COLOR, MENU_COLOR);
@@ -74,6 +80,13 @@ void	add_scene_config(t_scene *scene)
 	scene->nav = NULL;
 }
 
+t_bool	elements_check(t_scene *scene)
+{
+	if (!scene->a_light || !scene->cameras)
+		return (FALSE);
+	return (TRUE);
+}
+
 t_scene	create_scene(t_list *elements)
 {
 	t_list	*node;
@@ -83,6 +96,7 @@ t_scene	create_scene(t_list *elements)
 	ft_bzero(&scene, sizeof(t_scene));
 	if (elements == NULL)
 		return (scene);
+	scene_init(&scene);
 	node = elements;
 	while (node)
 	{
@@ -90,11 +104,12 @@ t_scene	create_scene(t_list *elements)
 		add_element(&scene, in);
 		node = node->next;
 	}
+	if (!elements_check(&scene))
+		printerror("Missing Elements in scene !!");
 	if (scene.cameras && scene.cameras->content)
 		scene.a_cam = (t_generic *)scene.cameras->content;
 	ft_lstiter(scene.geometries, add_id);
 	ft_lstiter(scene.geometries, init_bbox);
-	add_scene_config(&scene);
 	scene.geom_count = ft_lstsize(scene.geometries);
 	return (scene);
 }

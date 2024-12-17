@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasquez <jvasquez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yzaytoun <yzaytoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 14:45:20 by yzaytoun          #+#    #+#             */
-/*   Updated: 2024/10/22 19:37:29 by jvasquez         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:20:32 by yzaytoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <limits.h>
 # include "libft.h"
 # include "parser.h"
-# include "mlx.h"
 # include "rt_macros.h"
 # include "mnx_struct.h"
 # include "rt_math.h"
 # include "octree.h"
+# include "mlx.h"
 # ifdef LINUX
 #  include "mlx_int.h"
 # endif
